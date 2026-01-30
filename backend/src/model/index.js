@@ -1,12 +1,12 @@
-const { Sequelize, DataTypes } = require("sequelize");
+const { Sequelize } = require("sequelize");
+const BlagueModel = require("./blague.model");
+
 const sequelize = new Sequelize({
   dialect: "sqlite",
-  storage: "./db.sqlite"
+  storage: "./backend/db.sqlite",
+  logging: false,
 });
 
-const db = {};
-db.sequelize = sequelize;
+const Blague = BlagueModel(sequelize);
 
-db.Blague = require("./blague.model")(sequelize, DataTypes);
-
-module.exports = db;
+module.exports = { sequelize, Blague };

@@ -1,18 +1,19 @@
 const express = require("express");
 const cors = require("cors");
-const swaggerUI = require("swagger-ui-express");
-const swaggerDoc = require("./docs/swagger");
-
 const blaguesRoutes = require("./routes/blagues.routes");
-const db = require("./model");
+const { sequelize } = require("./model");
 
 const app = express();
+
 app.use(cors());
 app.use(express.json());
 
+// Routes versionnées
 app.use("/api/v1/blagues", blaguesRoutes);
-app.use("/api-docs", swaggerUI.serve, swaggerUI.setup(swaggerDoc));
 
-db.sequelize.sync();
+// Sync DB
+sequelize.sync().then(() => {
+  console.log("📦 Database synced");
+});
 
 module.exports = app;

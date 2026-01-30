@@ -1,11 +1,11 @@
 const express = require("express");
-const router = express.Router();
-const ctrl = require("../controller/blagues.controller");
+const controller = require("../controller/blagues.controller");
 
-// /api/v1/blagues
-router.post("/", ctrl.ajouter);               // ajouter blague
-router.get("/", ctrl.toutes);                 // toutes
-router.get("/random", ctrl.random);           // random
-router.get("/:id", ctrl.une);                 // une
+const router = express.Router();
+
+router.post("/", controller.create);
+router.get("/", controller.findAll);
+router.get("/random", controller.random);
+router.get("/:id", controller.findOne);
 
 module.exports = router;

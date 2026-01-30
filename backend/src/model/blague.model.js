@@ -1,11 +1,14 @@
-module.exports = (sequelize, DataTypes) => {
-    const Blague = sequelize.define("Blague", {
-      contenu: {
-        type: DataTypes.STRING,
-        allowNull: false
-      }
-    });
-  
-    return Blague;
-  };
-  
+const { DataTypes } = require("sequelize");
+
+module.exports = (sequelize) => {
+  return sequelize.define("Blague", {
+    question: {
+      type: DataTypes.STRING,
+      allowNull: false,
+    },
+    reponse: {
+      type: DataTypes.STRING,
+      allowNull: false,
+    },
+  });
+};

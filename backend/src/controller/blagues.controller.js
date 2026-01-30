@@ -1,22 +1,29 @@
-const BlagueService = require("../service/blagues.service");
+const service = require("../service/blagues.service");
 
-exports.ajouter = async (req, res) => {
-  const { contenu } = req.body;
-  const b = await BlagueService.ajouter(contenu);
-  res.json(b);
+exports.create = async (req, res) => {
+  try {
+    const blague = await service.createBlague(req.body);
+    res.status(201).json(blague);
+  } catch (error) {
+    res.status(400).json({ message: error.message });
+  }
 };
 
-exports.toutes = async (req, res) => {
-  const blagues = await BlagueService.toutes();
+exports.findAll = async (req, res) => {
+  const blagues = await service.getAllBlagues();
   res.json(blagues);
 };
 
-exports.une = async (req, res) => {
-  const blague = await BlagueService.une(req.params.id);
+exports.findOne = async (req, res) => {
+  const blague = await service.getBlagueById(req.params.id);
+  if (!blague) return res.status(404).json({ message: "Blague non trouvée" });
   res.json(blague);
 };
 
 exports.random = async (req, res) => {
-  const blague = await BlagueService.random();
+  const blague = await service.getRandomBlague();
+  if (!blague) {
+    return res.status(404).json({ message: "Aucune blague disponible" });
+  }
   res.json(blague);
 };
